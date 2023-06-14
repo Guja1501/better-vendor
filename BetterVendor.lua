@@ -173,8 +173,6 @@ local instance = CreateBetterVendorBuyPopUp()
 local progressBar = CreateBetterVendorProgressBar()
 
 local function MyMerchantItemButton_OnClick(self, button)
-    print(self:GetParent())
-
     if IsAltKeyDown() then
         local ID = self:GetID()
         local name, texture, price, quantity, numAvailable, isPurchasable, isUsable, extendedCost = GetMerchantItemInfo(
@@ -192,11 +190,19 @@ local function MyMerchantItemButton_OnClick(self, button)
                 local maxStackSize = min(stackSize, 200)
                 local ticks = ceil(amount / maxStackSize)
                 local duration = 0.33
+                local tickerInstance
 
                 progressBar.Start(amount)
 
-                C_Timer.NewTicker(duration, function()
-                    -- self:IsVisible()
+                tickerInstance = C_Timer.NewTicker(duration, function()
+                    if not MerchantFrame:IsVisible() then
+                        if tickerInstance then
+                            tickerInstance:Cancel()
+                            C_Timer.After(0.1, progressBar.Stop)
+                        end
+
+                        return
+                    end
                     if amount > maxStackSize then
                         BuyMerchantItem(ID, maxStackSize)
                         progressBar.Advance(maxStackSize)
