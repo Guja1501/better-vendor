@@ -1,0 +1,7 @@
+## Interface: 30401
+## Version: 1.0.0
+## Title: Better Vendor
+## Notes: Adds better bulk actions and automations
+## Author: Rangoo
+
+BetterVendor.lua
