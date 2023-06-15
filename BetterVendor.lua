@@ -59,9 +59,6 @@ local function CreateBetterVendorBuyPopUp()
     end
 
     local function Cancel()
-        -- Callback for cancel button
-        print("Cancelled")
-
         HideAndClear()
     end
 
@@ -88,6 +85,8 @@ local function CreateBetterVendorBuyPopUp()
     HideAndClear()
     cancelButton:SetScript("OnClick", Cancel)
     acceptButton:SetScript("OnClick", Accept)
+    input:SetScript("OnEscapePressed", Cancel)
+    input:SetScript("OnEnterPressed", Accept)
 
     return {
         frame = frame,
