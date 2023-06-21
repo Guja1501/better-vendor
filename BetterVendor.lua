@@ -252,4 +252,11 @@ local function RegisterBetterVendorMerchantItemClickHandlers()
     print(string.format("BetterVendor: Registered %d Merchant Item", i - 1))
 end
 
-RegisterBetterVendorMerchantItemClickHandlers()
+local BV_MerchantItemHandlersRegistered = false
+
+MerchantFrame:HookScript("OnShow", function()
+    if not BV_MerchantItemHandlersRegistered then
+        RegisterBetterVendorMerchantItemClickHandlers()
+        BV_MerchantItemHandlersRegistered = true
+    end
+end)
