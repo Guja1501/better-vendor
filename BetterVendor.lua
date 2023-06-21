@@ -26,6 +26,7 @@ local function CreateBetterVendorBuyPopUp()
     iconTexture:SetPoint("TOPLEFT", 10, -10)
     -- Set the item icon texture using an item's texture path
     iconTexture:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark")
+    iconTexture:EnableMouse(true)
 
     -- Create the item name fontstring
     local itemName = frame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -55,6 +56,17 @@ local function CreateBetterVendorBuyPopUp()
     cancelButton:SetPoint("BOTTOMLEFT", acceptButton, "BOTTOMRIGHT", 10, 0)
     cancelButton:SetText("Cancel")
 
+    local currentItemId = nil
+    iconTexture:SetScript("OnEnter", function(self)
+        if currentItemId ~= nil then
+            GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
+            GameTooltip:SetItemByID(currentItemId)
+        end
+    end)
+    iconTexture:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+
     local function HideAndClear()
         AcceptHandler = nil
         frame:Hide()
@@ -76,10 +88,11 @@ local function CreateBetterVendorBuyPopUp()
         HideAndClear()
     end
 
-    local function Activate(name, texture, stackSize)
+    local function Activate(name, texture, stackSize, ID)
         itemName:SetText(name)
         iconTexture:SetTexture(texture)
         maxStackSize:SetText(string.format("Max Stack: %d", stackSize))
+        currentItemId = ID
 
         frame:Show()
     end
@@ -179,12 +192,13 @@ local function BetterVendorMerchantItemButton_OnClick(self, button)
         local name, texture, price, quantity, numAvailable, isPurchasable, isUsable, extendedCost = GetMerchantItemInfo(
             ID)
         local stackSize = GetMerchantItemMaxStack(ID)
+        local itemId = GetMerchantItemID(ID)
 
         if not isPurchasable or numAvailable == nil then
             return
         end
 
-        instance.Activate(name, texture, stackSize)
+        instance.Activate(name, texture, stackSize, itemId)
 
         instance.OnAccept(function(amount)
             if amount > 0 then
