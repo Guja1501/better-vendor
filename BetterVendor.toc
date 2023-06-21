@@ -1,5 +1,5 @@
 ## Interface: 30401
-## Version: 0.1.2
+## Version: 0.1.3
 ## Title: Better Vendor
 ## Notes: Adds better bulk actions and automations
 ## Author: Rangoo

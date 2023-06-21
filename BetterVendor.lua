@@ -3,6 +3,8 @@ local function CreateBetterVendorBuyPopUp()
     local frame = CreateFrame("Frame", "BetterVendorBuyPopUp", UIParent, "BackdropTemplate")
     frame:SetSize(250, 105)
     frame:SetPoint("CENTER")
+    frame:SetFrameStrata("HIGH")
+    frame:EnableMouse(true)
     frame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
