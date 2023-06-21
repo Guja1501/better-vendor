@@ -116,6 +116,7 @@ local function CreateBetterVendorProgressBar()
     local frame = CreateFrame("Frame", "MyProgressBarFrame", UIParent, "BackdropTemplate")
     frame:SetSize(200, 30)
     frame:SetPoint("CENTER")
+    frame:SetFrameStrata("HIGH")
     frame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
