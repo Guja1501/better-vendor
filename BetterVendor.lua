@@ -171,7 +171,7 @@ end
 local instance = CreateBetterVendorBuyPopUp()
 local progressBar = CreateBetterVendorProgressBar()
 
-local function MyMerchantItemButton_OnClick(self, button)
+local function BetterVendorMerchantItemButton_OnClick(self, button)
     if IsAltKeyDown() then
         local ID = self:GetID()
         local name, texture, price, quantity, numAvailable, isPurchasable, isUsable, extendedCost = GetMerchantItemInfo(
@@ -223,7 +223,16 @@ local function MyMerchantItemButton_OnClick(self, button)
     end
 end
 
-for i = 1, 12 do
-    local button = _G["MerchantItem" .. i .. "ItemButton"]
-    button:HookScript("OnClick", MyMerchantItemButton_OnClick)
+local function RegisterBetterVendorMerchantItemClickHandlers()
+    local i = 1
+
+    while _G["MerchantItem" .. i .. "ItemButton"] ~= nil do
+        local button = _G["MerchantItem" .. i .. "ItemButton"]
+        button:HookScript("OnClick", BetterVendorMerchantItemButton_OnClick)
+        i = i + 1
+    end
+
+    print(string.format("BetterVendor: Registered %d Merchant Item", i - 1))
 end
+
+RegisterBetterVendorMerchantItemClickHandlers()
